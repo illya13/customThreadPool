@@ -4,4 +4,4 @@
 - [ThreadPool](../master/src/main/java/com/github/illya13/customThreadPool/request/ThreadPool.java) - interface of thread pool
 
 Usage can be found in:
-- test class [ThreadPoolBasedServerImplTest](../master/src/test/java/com/github/illya13/customThreadPool/server/impl/ThreadPoolBasedServerImplTest.java)
+- test class [CachedThreadPoolImplTest](../master/src/test/java/com/github/illya13/customThreadPool/server/impl/CachedThreadPoolImplTest.java)
