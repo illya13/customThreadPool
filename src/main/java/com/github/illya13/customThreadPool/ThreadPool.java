@@ -1,4 +1,4 @@
-package com.github.illya13.customThreadPool.server;
+package com.github.illya13.customThreadPool;
 
 public interface ThreadPool {
     public void submit(Runnable runnable);

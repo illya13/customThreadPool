@@ -1,6 +1,6 @@
-package com.github.illya13.customThreadPool.server.impl;
+package com.github.illya13.customThreadPool.impl;
 
-import com.github.illya13.customThreadPool.server.ThreadPool;
+import com.github.illya13.customThreadPool.ThreadPool;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;

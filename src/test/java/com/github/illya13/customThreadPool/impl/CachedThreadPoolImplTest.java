@@ -1,8 +1,8 @@
-package com.github.illya13.customThreadPool.server.impl;
+package com.github.illya13.customThreadPool.impl;
 
-import com.github.illya13.customThreadPool.request.Request;
-import com.github.illya13.customThreadPool.server.Server;
-import com.github.illya13.customThreadPool.server.ThreadPool;
+import com.github.illya13.customThreadPool.Request;
+import com.github.illya13.customThreadPool.Server;
+import com.github.illya13.customThreadPool.ThreadPool;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
