@@ -1,6 +1,6 @@
-package com.github.illya13.customThreadPool.impl;
+package com.github.illya13.customThreadPool.server.impl;
 
-import com.github.illya13.customThreadPool.ThreadPool;
+import com.github.illya13.customThreadPool.server.ThreadPool;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -13,6 +13,8 @@ public class CachedThreadPoolImpl implements ThreadPool{
     private final List<Thread> threads;
     private final Queue<Runnable> queue;
 
+    private final Object workersLock;
+
     public CachedThreadPoolImpl(int maxThreads) {
         this.currThreads = 0;
         this.maxThreads = maxThreads;
@@ -20,10 +22,12 @@ public class CachedThreadPoolImpl implements ThreadPool{
         workers = new LinkedList<Worker>();
         threads = new LinkedList<Thread>();
         queue = new ConcurrentLinkedQueue<Runnable>();
+
+        workersLock = new Object();
     }
 
     @Override
-    public synchronized void submit(Runnable runnable) {
+    public void submit(Runnable runnable) {
         // find idle if any
         for(Worker worker: workers) {
             if (worker.checkAndSetJob(runnable))
@@ -31,10 +35,12 @@ public class CachedThreadPoolImpl implements ThreadPool{
         }
 
         // can we start a new one
-        if (currThreads < maxThreads) {
-            addWorker(runnable);
-            currThreads++;
-            return;
+        synchronized (workersLock) {
+            if (currThreads < maxThreads) {
+                addWorker(runnable);
+                currThreads++;
+                return;
+            }
         }
 
         // put into queue
@@ -43,13 +49,23 @@ public class CachedThreadPoolImpl implements ThreadPool{
 
     @Override
     public void shutdown() {
-        for(Worker worker: workers) {
-            worker.terminate();
+        synchronized (workersLock) {
+            for (Worker worker : workers) {
+                worker.terminate();
+            }
+        }
+    }
+
+    @Override
+    public void awaitTermination() throws InterruptedException {
+        for(Thread thread: threads) {
+            thread.join();
         }
     }
 
     private void addWorker(Runnable runnable) {
         Worker worker = new Worker();
+        workers.add(worker);
         worker.checkAndSetJob(runnable);
 
         Thread thread = new Thread(worker, "thread-" + Integer.toString(threads.size()));
@@ -108,6 +124,7 @@ public class CachedThreadPoolImpl implements ThreadPool{
         public void terminate() {
             synchronized (lock) {
                 state = State.TERMINATED;
+                lock.notify();
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.github.illya13.customThreadPool;
+package com.github.illya13.customThreadPool.request;
 
 public class Request {
     private long id;

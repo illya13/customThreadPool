@@ -1,15 +1,14 @@
-package com.github.illya13.customThreadPool.impl;
+package com.github.illya13.customThreadPool.request;
 
-import com.github.illya13.customThreadPool.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DefaultRequestHandler implements Runnable {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultRequestHandler.class);
+public class RequestHandler implements Runnable {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequestHandler.class);
 
     private final Request request;
 
-    public DefaultRequestHandler(Request request) {
+    public RequestHandler(Request request) {
         this.request = request;
     }
 
