@@ -98,8 +98,10 @@ public class CachedThreadPoolImpl implements ThreadPool{
                         } while (job != null);
                     }
                     synchronized (lock) {
-                        state = State.IDLE;
-                        lock.wait();
+                        if (state != State.TERMINATED) {
+                            state = State.IDLE;
+                            lock.wait();
+                        }
                     }
                 }
             } catch (InterruptedException e) {
