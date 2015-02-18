@@ -1,4 +1,4 @@
-# customThreadPool - try to manually implement thread pool 
+# customThreadPool - try to manually implement a thread pool 
 - [Request](../master/src/main/java/com/github/illya13/customThreadPool/request/Request.java) - sample client request
 - [RequestHandler](../master/src/main/java/com/github/illya13/customThreadPool/request/RequestHandler.java) - sample 'processing' of Request by a Server
 - [Server](../master/src/main/java/com/github/illya13/customThreadPool/request/Server.java) - any server side processing of a Request
